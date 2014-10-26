@@ -1,4 +1,4 @@
 name: 博客 
-markdown: redcarpet
-url : http://www.chenhuaming.cn
+markdown: rdiscount
 pygments: true
+url : http://www.chenhuaming.cn
