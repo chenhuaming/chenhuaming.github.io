@@ -38,7 +38,7 @@ public class MyArrayList<E> {
 		}
 		if (miniCapacity - elementData.length > 0) {
 			int oldCapacity = elementData.length;
-			int newCapacity = oldCapacity + (oldCapacity >> 2);
+			int newCapacity = oldCapacity + (oldCapacity >> 1);
 			if (miniCapacity - newCapacity > 0)
 				newCapacity = miniCapacity;
 			Object[] tmp = new Object[newCapacity];
