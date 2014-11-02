@@ -7,6 +7,8 @@ tag: java ArrayList
 ```java
 package demo001;
 
+import java.util.Arrays;
+
 public class MyArrayList<E> {
 	private final int capacity = 10; // 初始容量
 	private int size;
@@ -32,6 +34,8 @@ public class MyArrayList<E> {
 		}
 	}
 
+	private final static int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+
 	public void grow(int miniCapacity) {
 		if (elementData.length == 0) {
 			elementData = new Object[capacity];
@@ -39,12 +43,19 @@ public class MyArrayList<E> {
 		if (miniCapacity - elementData.length > 0) {
 			int oldCapacity = elementData.length;
 			int newCapacity = oldCapacity + (oldCapacity >> 1);
-			if (miniCapacity - newCapacity > 0)
+			if (newCapacity - newCapacity < 0)
 				newCapacity = miniCapacity;
-			Object[] tmp = new Object[newCapacity];
-			System.arraycopy(elementData, 0, tmp, 0, oldCapacity);
-			elementData = tmp;
+			if (newCapacity - MAX_ARRAY_SIZE > 0)
+				newCapacity = hugeCapacity(miniCapacity);
+			elementData = Arrays.copyOf(elementData, newCapacity);
 		}
+	}
+
+	private static int hugeCapacity(int minCapacity) {
+		if (minCapacity < 0) // overflow
+			throw new OutOfMemoryError();
+		return (minCapacity > MAX_ARRAY_SIZE) ? Integer.MAX_VALUE
+				: MAX_ARRAY_SIZE;
 	}
 
 	// 在list尾部添加一个元素
@@ -89,8 +100,9 @@ public class MyArrayList<E> {
 	public E remove(int index) {
 		rangCheck(index);
 		Object removeValue = elementData[index];
-		System.arraycopy(elementData, index+1, elementData, index, size-1-index);
-		elementData[size-1]=null;
+		System.arraycopy(elementData, index + 1, elementData, index, size - 1
+				- index);
+		elementData[size - 1] = null;
 		size--;
 		return (E) removeValue;
 	}
@@ -129,16 +141,17 @@ public class MyArrayList<E> {
 	// this is unit test
 	public static void main(String args[]) {
 		MyArrayList<String> list = new MyArrayList<String>();
-		String[] arrayStr = {"1","2","3","4"};
+		String[] arrayStr = { "1", "2", "3", "4" };
 		list.addAll(arrayStr);
-		list.add(2,"f");
+		list.add(2, "f");
 		list.remove(2);
-		list.addAll(3,arrayStr);
-		for(Object o: list.toArray()){
-			System.out.print(o+" ");
+		list.addAll(3, arrayStr);
+		for (Object o : list.toArray()) {
+			System.out.print(o + " ");
 		}
-		System.out.println("\n"+list.size());
+		System.out.println("\n" + list.size());
 	}
 
 }
+
 ```
