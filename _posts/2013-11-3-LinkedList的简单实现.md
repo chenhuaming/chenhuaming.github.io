@@ -1,7 +1,7 @@
 ---
 layout: post
 title: LinkedList的简单实现
-tag: java LinkedList
+tag: java, LinkedList
 ---
 
 ```java
