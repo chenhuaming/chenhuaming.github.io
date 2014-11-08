@@ -1,7 +1,7 @@
 ---
 layout: post
 title: ArrayList的简单实现
-tag: java ArrayList
+tag: java, ArrayList
 ---
 
 ```java
